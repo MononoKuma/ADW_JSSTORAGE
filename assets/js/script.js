@@ -13,12 +13,13 @@ if (transactionList.length > 0) {
 
 function TableRowCreator() {
     const newRow = document.createElement('tr');
+    newRow.id = transaction.id;
     newRow.innerHTML = `
-    <td>${counter + 1}</td>
-    <td>${nameInput.value}</td>
-    <td>${valueInput.value}</td>
+    <td>${transaction.id + 1}</td>
+    <td>${transaction.value}</td>
+    <td>${transaction.value}</td>
     <td>
-        <button>x</button>
+        <button onclick="DeleteFunction(id)">x</button>
     </td>
     `
 
@@ -38,4 +39,10 @@ function AddTransaction() {
     localStorage.setItem('counter', counter);
 
     counter++;
+}
+
+function DeleteFunction(id) {
+    transactionList = transactionList.filter(transaction => transaction.id !== id); 
+    localStorage.setItem('transactionList', JSON.stringify(transactionList));
+
 }
