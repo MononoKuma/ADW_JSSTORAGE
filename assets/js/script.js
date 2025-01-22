@@ -2,30 +2,40 @@ const valueInput = document.getElementById('value');
 const nameInput = document.getElementById('name');
 const tableOutput = document.getElementById('transaction-list');
 
-let counter = 0;
+let counter = JSON.parse(localStorage.getItem('counter')) || 0;
 let transactionList = [];
 
-function AddTransaction() {
+if (transactionList.length > 0) {
+    transactionList.forEach(transaction => {
+        TableRowCreator({id: (transaction.id), name: (transaction.name), value: (transaction.value)});  
+    });
+}
+
+function TableRowCreator() {
     const newRow = document.createElement('tr');
     newRow.innerHTML = `
-        <td>${counter + 1}</td>
-        <td>${nameInput.value}</td>
-        <td>${valueInput.value}</td>
-        <td>
-            <button>x</button>
-        </td>
+    <td>${counter + 1}</td>
+    <td>${nameInput.value}</td>
+    <td>${valueInput.value}</td>
+    <td>
+        <button>x</button>
+    </td>
     `
 
-    tableOutput.appendChild(newRow);
+tableOutput.appendChild(newRow);
 
-    transactionList.push({
+}
+
+function AddTransaction() {
+    
+    TableRowCreator({
         id: counter,
         name: nameInput.value,
         value: valueInput.value
     });
     
     localStorage.setItem('transactionList', JSON.stringify(transactionList));
-    localStorage.setItem('counter', JSON.stringify(counter));
+    localStorage.setItem('counter', counter);
 
     counter++;
 }
